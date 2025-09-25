@@ -1,121 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Homework Helper</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #10121a;
-      color: #eef2ff;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      justify-content: center;
-      align-items: center;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      font-size: 24px;
-      margin: 0;
-    }
-
-    p {
-      color: #cbd5e1;
-      margin-top: 8px;
-      text-align: center;
-    }
-
-    .login-box {
-      background: #0f1724;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      width: 320px;
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    input {
-      width: 100%;
-      padding: 8px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 6px;
-      box-sizing: border-box;
-    }
-
-    button {
-      margin-top: 10px;
-      padding: 10px;
-      width: 100%;
-      border: none;
-      border-radius: 6px;
-      background: #4caf50;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #43a047;
-    }
-
-    .error {
-      color: #ff6b6b;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 13px;
-      color: #94a3b8;
-      margin-top: 40px;
-    }
+    body { font-family: Arial, sans-serif; background:#10121a; color:#eef2ff; margin:0; padding:24px; }
+    header { text-align:center; margin-bottom:18px; }
+    h1 { margin:0; font-size:24px; }
+    p { color:#cbd5e1; text-align:center; }
+    main { display:flex; justify-content:center; margin-top:40px; }
+    form { background:#0f1724; padding:20px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.4); width:280px; }
+    label { display:block; margin-top:12px; }
+    input { width:100%; padding:8px; margin-top:6px; border:none; border-radius:6px; }
+    button { margin-top:16px; width:100%; padding:10px; background:#1e293b; color:#eef2ff; border:none; border-radius:6px; cursor:pointer; }
+    button:hover { background:#334155; }
+    footer { text-align:center; margin-top:20px; font-size:13px; color:#94a3b8; }
+    .error { color:#f87171; text-align:center; margin-top:10px; }
   </style>
 </head>
 <body>
   <header>
-    <h1>Welcome to Homework Helper</h1>
-    <p>All educational games and study tools in one place.</p>
+    <h1>Homework Helper</h1>
+    <p>Please log in with your school info to continue</p>
   </header>
 
-  <div class="login-box">
+  <main>
     <form id="loginForm">
-      <input type="text" id="username" placeholder="Enter Username" required>
-      <input type="text" id="class" placeholder="Enter Class/Grade" required>
-      <button type="submit">Sign In</button>
-      <div id="error" class="error"></div>
+      <label>Username
+        <input type="text" id="username" required />
+      </label>
+      <label>Class/Grade
+        <input type="text" id="grade" required />
+      </label>
+      <button type="submit">Login</button>
+      <div class="error" id="error"></div>
     </form>
-  </div>
+  </main>
 
   <footer>
-    © 2025 Homework Helper — Study hard, play responsibly
+    © 2025 Homework Helper
   </footer>
 
   <script>
     document.getElementById("loginForm").addEventListener("submit", function(e) {
       e.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      const grade = document.getElementById("grade").value.trim();
+      const errorBox = document.getElementById("error");
 
-      const username = document.getElementById("username").value.trim().toLowerCase();
-      const classGrade = document.getElementById("class").value.trim().toLowerCase();
-
-      // Set the correct login combo here
-      const correctUser = "MathIsFun";
-      const correctClass = "Math 7";
-
-      if (username === correctUser && classGrade === correctClass) {
-        window.location.href = "games/index.html"; // go to games page
+      // ✅ Set allowed login values here
+      if (username === "student" && grade === "9") {
+        window.location.href = "games/index.html";
       } else {
-        document.getElementById("error").textContent = "Invalid username or class/grade.";
+        errorBox.textContent = "Invalid username or grade!";
       }
     });
   </script>
