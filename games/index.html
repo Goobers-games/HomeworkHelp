@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Breaks & Games</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#10121a; color:#eef2ff; margin:0; padding:24px; }
+    header { text-align:center; margin-bottom:18px; }
+    h1 { margin:0; font-size:24px; }
+    p { color:#cbd5e1; text-align:center; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:18px; }
+    .tile { background:#0f1724; padding:14px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.4); text-align:center; }
+    a { color:#9be7ff; text-decoration:none; display:inline-block; margin-top:10px; padding:8px 12px; border-radius:6px; border:1px solid rgba(155,231,255,0.14); }
+    footer { text-align:center; margin-top:20px; font-size:13px; color:#94a3b8; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Breaks & Games</h1>
+    <p>Short, browser playable games for quick breaks. Use responsibly — get back to homework when your break is over.</p>
+  </header>
+
+  <main>
+    <div class="grid">
+      <div class="tile">
+        <h3>Snake (Example)</h3>
+        <p>Classic snake game — click to play.</p>
+        <a href="games/snake/index.html">Play Snake</a>
+      </div>
+
+      <div class="tile">
+        <h3>Flappy (Example)</h3>
+        <p>Quick one-button game.</p>
+        <a href="games/flappy/index.html">Play Flappy</a>
+      </div>
+
+      <div class="tile">
+        <h3>Pong (Example)</h3>
+        <p>Two-player or vs AI.</p>
+        <a href="games/pong/index.html">Play Pong</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Homework Helper — Breaks are for short rests only.
+  </footer>
+</body>
+</html>
