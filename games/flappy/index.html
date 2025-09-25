@@ -25,34 +25,38 @@
     let frames = 0;
     const DEGREE = Math.PI/180;
 
-    // Bird
+    // Bird sprite
+    const birdImg = new Image();
+    birdImg.src = "https://i.ibb.co/WVZDcqD/flappy-bird.png"; // small bird sprite
+
     const bird = {
       x: 50,
       y: 150,
       w: 34,
-      h: 26,
+      h: 24,
       gravity: 0.25,
       jump: 4.6,
       speed: 0,
       rotation: 0,
+      alive: true,
       draw() {
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
-        ctx.fillStyle = "yellow";
-        ctx.fillRect(-this.w/2, -this.h/2, this.w, this.h);
+        ctx.drawImage(birdImg, -this.w/2, -this.h/2, this.w, this.h);
         ctx.restore();
       },
       flap() {
-        this.speed = -this.jump;
+        if (this.alive) this.speed = -this.jump;
       },
       update() {
         this.speed += this.gravity;
         this.y += this.speed;
 
-        if (this.y + this.h/2 >= canvas.height - 80) {
-          this.y = canvas.height - 80 - this.h/2;
-          this.speed = 0;
+        // ground hit
+        if (this.y + this.h/2 >= canvas.height - groundHeight) {
+          this.y = canvas.height - groundHeight - this.h/2;
+          this.alive = false;
         }
 
         if (this.speed >= this.jump) {
@@ -66,8 +70,26 @@
     // Pipes
     const pipes = [];
     const pipeWidth = 50;
-    const pipeGap = 90;
+    const pipeGap = 95;
     const pipeFreq = 90;
+
+    function drawPipe(x, topHeight) {
+      // Mario-style green pipe
+      ctx.fillStyle = "#228B22";
+      // top pipe body
+      ctx.fillRect(x, 0, pipeWidth, topHeight);
+      // top pipe cap
+      ctx.fillStyle = "#006400";
+      ctx.fillRect(x - 4, topHeight - 20, pipeWidth + 8, 20);
+
+      // bottom pipe body
+      const bottomY = topHeight + pipeGap;
+      ctx.fillStyle = "#228B22";
+      ctx.fillRect(x, bottomY, pipeWidth, canvas.height - bottomY - groundHeight);
+      // bottom pipe cap
+      ctx.fillStyle = "#006400";
+      ctx.fillRect(x - 4, bottomY, pipeWidth + 8, 20);
+    }
 
     // Ground
     const groundHeight = 80;
@@ -80,21 +102,15 @@
       ctx.fillRect(0, canvas.height - groundHeight, canvas.width, groundHeight);
     }
 
-    function drawPipes() {
-      ctx.fillStyle = "#228B22";
-      pipes.forEach(p => {
-        ctx.fillRect(p.x, 0, pipeWidth, p.top);
-        ctx.fillRect(p.x, p.top + pipeGap, pipeWidth, canvas.height);
-      });
-    }
-
     function updatePipes() {
-      if (frames % pipeFreq === 0) {
+      if (frames % pipeFreq === 0 && bird.alive) {
         const top = Math.floor(Math.random() * (canvas.height - pipeGap - groundHeight - 50)) + 20;
         pipes.push({ x: canvas.width, top });
       }
       pipes.forEach((p, i) => {
-        p.x -= 2;
+        if (bird.alive) p.x -= 2;
+
+        drawPipe(p.x, p.top);
 
         // collision
         if (
@@ -102,11 +118,11 @@
           bird.x - bird.w/2 < p.x + pipeWidth &&
           (bird.y - bird.h/2 < p.top || bird.y + bird.h/2 > p.top + pipeGap)
         ) {
-          resetGame();
+          bird.alive = false;
         }
 
         // passed pipe
-        if (p.x + pipeWidth === bird.x) {
+        if (p.x + pipeWidth === bird.x && bird.alive) {
           score++;
         }
 
@@ -125,6 +141,7 @@
     function resetGame() {
       bird.y = 150;
       bird.speed = 0;
+      bird.alive = true;
       pipes.length = 0;
       score = 0;
     }
@@ -137,7 +154,6 @@
       bird.update();
       updatePipes();
 
-      drawPipes();
       drawGround();
       bird.draw();
       drawScore();
@@ -147,6 +163,9 @@
 
     document.addEventListener("keydown", e => {
       if (e.code === "Space" || e.code === "ArrowUp" || e.code === "KeyW") {
+        if (!bird.alive) {
+          resetGame();
+        }
         bird.flap();
       }
     });
@@ -155,3 +174,4 @@
   </script>
 </body>
 </html>
+
