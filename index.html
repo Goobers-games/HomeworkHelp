@@ -1,10 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Homework Help</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Homework Helper</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f8; color:#111; display:flex; min-height:100vh; align-items:center; justify-content:center; margin:0; }
+    .card { width:320px; background:white; padding:20px; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.08); }
+    h1 { margin:0 0 12px 0; font-size:20px; text-align:center; }
+    label { display:block; margin-top:10px; font-size:13px; }
+    input { width:100%; padding:8px; margin-top:6px; box-sizing:border-box; border-radius:6px; border:1px solid #d5dbe0; }
+    button { width:100%; margin-top:14px; padding:10px; border-radius:8px; border:0; background:#1e88e5; color:white; font-weight:600; cursor:pointer; }
+    .note { font-size:12px; color:#555; margin-top:12px; text-align:center; }
+    .games-link { display:block; text-align:center; margin-top:12px; color:#1e88e5; text-decoration:none; }
+  </style>
 </head>
 <body>
-  <h1>"This website will help you with homework!</h1>
-  <p>This website does not give you the direct answers it only gives you hints and steps but never the answers.</p>
+  <div class="card">
+    <h1>Homework Helper</h1>
+
+    <!-- Mock sign in (no credentials stored) -->
+    <form id="loginForm" onsubmit="return handleLogin(event)">
+      <label for="user">Username</label>
+      <input id="user" name="user" type="text" placeholder="e.g. student123" required autocomplete="off">
+
+      <label for="class">Class / Grade</label>
+      <input id="class" name="class" type="text" placeholder="e.g. Math 8" required>
+
+      <button type="submit">Sign in</button>
+    </form>
+
+    <p class="note">
+      This is a demo sign-in (no real accounts). After signing in, you will be taken to the **Breaks & Games** page — meant for short breaks only.
+    </p>
+
+    <a class="games-link" href="games/index.html">Skip sign-in — Go to Breaks & Games</a>
+  </div>
+
+  <script>
+    function handleLogin(e) {
+      e.preventDefault();
+      // Show a friendly message, then redirect to the games page.
+      const username = document.getElementById('user').value || 'Student';
+      alert('Welcome, ' + username + '. You will be redirected to the Breaks & Games page. Use breaks responsibly!');
+      // Redirect to games folder (client-side). This keeps things honest and transparent.
+      window.location.href = 'games/index.html';
+      return false;
+    }
+  </script>
 </body>
 </html>
