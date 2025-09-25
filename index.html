@@ -30,19 +30,11 @@
       <button type="submit">Sign in</button>
     </form>
 
-    <p class="note">
-      This is a demo sign-in (no real accounts). After signing in, you will be taken to the **Breaks & Games** page — meant for short breaks only.
-    </p>
-
-    <a class="games-link" href="games/index.html">Skip sign-in — Go to Breaks & Games</a>
   </div>
 
   <script>
     function handleLogin(e) {
       e.preventDefault();
-      // Show a friendly message, then redirect to the games page.
-      const username = document.getElementById('user').value || 'Student';
-      alert('Welcome, ' + username + '. You will be redirected to the Breaks & Games page. Use breaks responsibly!');
       // Redirect to games folder (client-side). This keeps things honest and transparent.
       window.location.href = 'games/index.html';
       return false;
